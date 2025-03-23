@@ -25,3 +25,5 @@ const userSchema = new mongoose.Schema({
 
 const user = mangoose.model('User', userSchema)
 Module.exports = User;
+
+// jncd
