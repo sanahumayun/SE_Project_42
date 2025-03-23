@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// push
 const userSchema = new mongoose.Schema({
     name: {type: String, required:true},
     email: {type:String, required:true,unique: true},
@@ -25,3 +25,5 @@ const userSchema = new mongoose.Schema({
 
 const user = mangoose.model('User', userSchema)
 Module.exports = User;
+
+// jncd
