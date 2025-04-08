@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5000/api/courses';
+const API_BASE = process.env.REACT_APP_API_BASE_URL + '/courses';
 
 export const createCourse = async (courseData) => {
   return axios.post(API_BASE, courseData);

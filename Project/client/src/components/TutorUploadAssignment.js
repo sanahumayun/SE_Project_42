@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCourses } from '../api/courseAPI';
+import { getCourses } from '../api/courseApi';
 import { createAssignment } from '../api/assignmentApi';
 
 const TutorUploadAssignment = () => {

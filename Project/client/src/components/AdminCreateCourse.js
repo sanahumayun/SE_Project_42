@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createCourse } from '../api/courseAPI';
+import { createCourse } from '../api/courseApi';
 
 const AdminCreateCourse = () => {
   const [name, setName] = useState('');
