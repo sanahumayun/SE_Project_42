@@ -8,6 +8,8 @@ import StudentSubmitAssignment from './components/StudentSubmitAssignment';
 import CourseList from './pages/Courses/CourseList';
 import CreateCourse from './pages/Courses/CreateCourse';
 
+import InstructorReviews from './components/InstructorReviews';
+import SubmitReviewForm from './components/SubmitReviewForm';
 const App = () => {
   return (
     <Router>
@@ -20,6 +22,8 @@ const App = () => {
           <Link to="/tutor-upload"><button>📤 Tutor - Upload Assignment</button></Link>{' '}
           <Link to="/student-course-view"><button>👩‍🎓 Student - View Courses</button></Link>{' '}
           <Link to="/student-submit"><button>📨 Student - Submit Assignment</button></Link>
+          <Link to="/instructor-reviews"><button>⭐ Instructor Reviews</button></Link>{' '}
+          <Link to="/submit-review"><button>✏️ Submit Review</button></Link>
         </nav>
 
         {/* 📌 Route Setup */}
@@ -30,6 +34,11 @@ const App = () => {
           <Route path="/student-submit" element={<StudentSubmitAssignment />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/create-course" element={<CreateCourse />} />
+
+          <Route path="/instructor-reviews" element={<InstructorReviews />} />
+          <Route path="/instructor-reviews/:instructorId" element={<InstructorReviews />} />
+          <Route path="/submit-review" element={<SubmitReviewForm />} />
+          <Route path="/submit-review/:instructorId" element={<SubmitReviewForm />} />
         </Routes>
       </div>
     </Router>
