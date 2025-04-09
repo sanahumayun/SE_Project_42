@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import TutorUploadAssignment from './components/TutorUploadAssignment';
 import StudentCourseView from './components/StudentCourseView';
 import StudentSubmitAssignment from './components/StudentSubmitAssignment';
+import StudentProgress from './components/StudentProgress';
+import TutorViewProgress from './components/TutorViewProgress';     
 import CourseList from './pages/Courses/CourseList';
 import CreateCourse from './pages/Courses/CreateCourse';
 
@@ -30,8 +32,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<h1>Welcome to Course and Assignment Management</h1>} />
           <Route path="/tutor-upload" element={<TutorUploadAssignment />} />
+          <Route path="/tutor-progress" element={<TutorViewProgress />} />
           <Route path="/student-course-view" element={<StudentCourseView />} />
           <Route path="/student-submit" element={<StudentSubmitAssignment />} />
+          <Route path="/student-progress" element={<StudentProgress />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/create-course" element={<CreateCourse />} />
 
