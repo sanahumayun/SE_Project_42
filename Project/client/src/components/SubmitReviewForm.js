@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { createReview } from '../../api/reviewApi';
+import { createReview } from '../api/reviewApi';
 import StarRatingInput from '../common/StarRatingInput';
 import { toast } from 'react-toastify';
+
 
 const SubmitReviewForm = ({ instructorId, courseId, onSuccess }) => {
   const [rating, setRating] = useState(0);
