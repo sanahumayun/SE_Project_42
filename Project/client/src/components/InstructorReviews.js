@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getInstructorReviews, markHelpful } from '../../api/reviewApi';
-import { StarRating } from '../common/StarRating';
+import { getInstructorReviews, markHelpful } from '../api/reviewApi';
+import StarRating from '../common/StarRating';
 import { useSelector } from 'react-redux';
+
 
 const InstructorReviews = ({ instructorId }) => {
   const [reviews, setReviews] = useState([]);
