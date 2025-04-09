@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { createCourse, getAllCourses } = require('../controllers/courseController');
-const { checkRole } = require('../middleware/authMiddleware');
+const courseController = require('../controllers/courseController');
+const { authenticate } = require('../middleware/authMiddleware');
 
-// Admin creates a course
-router.post('/', checkRole('admin'), createCourse);
+// Public routes
+router.get('/', courseController.getAllCourses);
 
-// Optional: View all courses
-router.get('/', getAllCourses);
+// Protected routes
+router.post('/', authenticate, courseController.createCourse); //for admin
+router.get('/my-courses', authenticate, courseController.getMyEnrolledCourses); // For students
+router.get('/my-teaching-courses', authenticate, courseController.getMyTeachingCourses); // For tutors
 
 module.exports = router;

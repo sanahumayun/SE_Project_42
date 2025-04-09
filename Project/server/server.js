@@ -22,9 +22,7 @@ app.use((req, res, next) => {
 // Routes
 const courseRoutes = require('./routes/courseRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
-const submissionRoutes = require('./routes/submissionRoutes');
 
-app.use('/api/submissions', submissionRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/assignments', assignmentRoutes);
 

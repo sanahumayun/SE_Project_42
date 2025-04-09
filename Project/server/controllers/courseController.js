@@ -1,33 +1,55 @@
 const Course = require('../models/Course');
 
-const createCourse = async (req, res) => {
-  const { name, description, tutorId } = req.body;
-
-  if (!name || !tutorId) {
-    return res.status(400).json({ message: 'Course name and tutorId are required' });
-  }
-
+// 1. Get ALL public courses (no auth required)
+exports.getAllCourses = async (req, res) => {
   try {
-    const newCourse = await Course.create({ name, description, tutorId });
-    res.status(201).json(newCourse);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
-};
-
-//does not implement getting enrolled courses
-
-// Optional: Get all courses for admin/tutor (not filtered by enrollment)
-const getAllCourses = async (req, res) => {
-  try {
-    const courses = await Course.find().populate('tutorId', 'name email');
+    const courses = await Course.find()
+      .populate('instructor', 'name email')
+      .select('-studentsEnrolled');
     res.status(200).json(courses);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch courses', error: err.message });
+    res.status(500).json({ error: 'Failed to fetch courses' });
   }
 };
 
-module.exports = {
-  createCourse,
-  getAllCourses,
+// 2. Create a course (Instructor/Admin only)
+exports.createCourse = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    if (req.user.role !== 'instructor' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Only instructors/admins can create courses' });
+    }
+    const newCourse = await Course.create({ title, description, instructor: req.user.id });
+    res.status(201).json(newCourse);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create course' });
+  }
+};
+
+// 3. Get courses for the CURRENTLY LOGGED-IN student
+exports.getMyEnrolledCourses = async (req, res) => {
+  try {
+    if (req.user.role !== 'student') {
+      return res.status(403).json({ error: 'Only students can fetch enrolled courses' });
+    }
+    const courses = await Course.find({ studentsEnrolled: req.user.id })
+      .populate('instructor', 'name email');
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch your courses' });
+  }
+};
+
+// 4. Get courses for the CURRENTLY LOGGED-IN tutor
+exports.getMyTeachingCourses = async (req, res) => {
+  try {
+    if (req.user.role !== 'instructor') {
+      return res.status(403).json({ error: 'Only instructors can fetch their taught courses' });
+    }
+    const courses = await Course.find({ instructor: req.user.id })
+      .populate('studentsEnrolled', 'name email');
+    res.status(200).json(courses);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch your courses' });
+  }
 };

@@ -1,42 +1,45 @@
+// src/components/StudentCourseView.js
 import React, { useEffect, useState } from 'react';
-import { getCourses } from '../api/courseApi';
-import { getAssignmentsByCourse } from '../api/assignmentApi';
+import { getCourses } from '../api/courseApi'; 
 
 const StudentCourseView = () => {
   const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [assignments, setAssignments] = useState([]);
+  const [error, setError] = useState('');
 
+  // Fetch courses when the component mounts
   useEffect(() => {
-    getCourses().then(res => setCourses(res.data));
-  }, []);
+    const fetchCourses = async () => {
+      try {
+        const response = await getCourses(); // This calls the function from the API file
+        setCourses(response.data); // Save the courses data to the state
+      } catch (err) {
+        setError('Error fetching courses: ' + err.message);
+      }
+    };
 
-  const handleCourseSelect = async (e) => {
-    const courseId = e.target.value;
-    setSelectedCourse(courseId);
-    const res = await getAssignmentsByCourse(courseId);
-    setAssignments(res.data);
-  };
+    fetchCourses();
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   return (
     <div>
-      <h2>View Assignments</h2>
-      <select onChange={handleCourseSelect}>
-        <option value="">Select Course</option>
-        {courses.map(course => (
-          <option key={course._id} value={course._id}>{course.name}</option>
-        ))}
-      </select>
+      <h2>Courses for Student</h2>
+      
+      {/* Show error message if something went wrong */}
+      {error && <p>{error}</p>}
 
-      {assignments.length > 0 && (
-        <ul>
-          {assignments.map(a => (
-            <li key={a._id}>
-              <strong>{a.title}</strong> — due {new Date(a.dueDate).toLocaleDateString()}
+      {/* Render courses */}
+      <ul>
+        {courses.length > 0 ? (
+          courses.map(course => (
+            <li key={course._id}>
+              <h3>{course.name}</h3>
+              <p>{course.description}</p>
             </li>
-          ))}
-        </ul>
-      )}
+          ))
+        ) : (
+          <p>No courses available.</p>
+        )}
+      </ul>
     </div>
   );
 };
