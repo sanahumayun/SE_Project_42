@@ -11,7 +11,7 @@ const CreateCourse = () => {
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
-        const res = await axios.get('/api/users?role=tutor'); // or whatever endpoint gives tutors
+        const res = await axios.get('/api/users?role=tutor'); 
         setInstructors(res.data);
       } catch (err) {
         console.error('Failed to fetch instructors', err);

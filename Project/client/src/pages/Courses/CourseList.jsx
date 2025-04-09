@@ -8,7 +8,7 @@ const CourseList = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get('/api/courses'); // adjust baseURL if needed
+        const res = await axios.get('/api/courseApi'); 
         setCourses(res.data);
       } catch (err) {
         console.error('Failed to fetch courses', err);

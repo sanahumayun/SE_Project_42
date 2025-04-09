@@ -1,7 +1,7 @@
 // src/pages/Courses/CreateCourse.jsx
 
 import React, { useState } from 'react';
-import { createCourse } from '../../api/course'; // adjust path if needed
+import { createCourse } from '../../api/courseApi';
 import { useNavigate } from 'react-router-dom';
 
 const CreateCourse = () => {
@@ -15,10 +15,10 @@ const CreateCourse = () => {
     setLoading(true);
 
     try {
-      const token = localStorage.getItem('token'); // or from context
+      const token = localStorage.getItem('token'); 
       await createCourse({ title, description }, token);
       alert('Course created successfully!');
-      navigate('/my-courses/instructor'); // or wherever makes sense
+      navigate('/my-courses/instructor'); 
     } catch (err) {
       console.error(err);
       alert('Failed to create course.');
