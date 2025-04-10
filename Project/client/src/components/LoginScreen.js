@@ -103,7 +103,7 @@
 
 // client/src/components/LoginScreen.js
 import React, { useState } from 'react';
-import { useChatContext } from '../../context/ChatContext';
+import { useChatContext } from '../../src/ChatContext';
 import './LoginScreen.css';
 
 const LoginScreen = () => {

@@ -142,7 +142,7 @@
 
 // client/src/components/ChatWindow.js
 import React, { useState, useEffect, useRef } from 'react';
-import { useChatContext } from '../../context/ChatContext';
+import { useChatContext } from '../../src/ChatContext';
 import './ChatWindow.css';
 
 const ChatWindow = ({ onBackClick, showBackButton }) => {

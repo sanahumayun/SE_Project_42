@@ -54,7 +54,7 @@
 
 // client/src/components/ChatLayout.js
 import React, { useState, useEffect } from 'react';
-import { useChatContext } from '../../../../../chat-app/client/src/context/ChatContext';
+import { useChatContext } from '../../src/ChatContext';
 import ChatSidebar from './ChatSidebar';
 import ChatWindow from './ChatWindow';
 import LoginScreen from './LoginScreen';
