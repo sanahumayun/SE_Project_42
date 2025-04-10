@@ -45,4 +45,26 @@ const App = () => {
   );
 };
 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ChatProvider } from '../../context/ChatContext';
+import ChatLayout from '../../../Project/client/src/components/components/ChatLayout';
+import './App.css';
+
+function App() {
+  return (
+    <Router>
+      <ChatProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<ChatLayout />} />
+          </Routes>
+        </div>
+      </ChatProvider>
+    </Router>
+  );rr33333333333333333333333
+}
+
+
+
 export default App;
