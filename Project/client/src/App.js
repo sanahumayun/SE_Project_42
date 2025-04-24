@@ -41,6 +41,12 @@ const App = () => {
           <Link to="/student-submit">
             <button>📨 Student - Submit Assignment</button>
           </Link>
+          <Link to="/student-progress">
+            <button>👩‍🎓 Student - View My Progress</button>
+          </Link>
+          <Link to="/tutor-progress">
+            <button>👨‍🏫 Tutor - View Student Progress</button>
+          </Link>{" "}
           <Link to="/instructor-reviews">
             <button>⭐ Instructor Reviews</button>
           </Link>{" "}
