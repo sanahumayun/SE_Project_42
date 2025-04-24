@@ -5,6 +5,10 @@ import axios from "axios";
 import Signup from './pages/Auth/Signup';
 import Login from './pages/Auth/Login';
 
+import AdminDashboard from "./pages/Dashboards/AdminDashboard";
+import TutorDashboard from "./pages/Dashboards/TutorDashboard";
+import StudentDashboard from "./pages/Dashboards/StudentDashboard";
+
 import TutorUploadAssignment from "./components/TutorUploadAssignment";
 import StudentCourseView from "./components/StudentCourseView";
 import StudentSubmitAssignment from "./components/StudentSubmitAssignment";
@@ -37,6 +41,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/tutor-dashboard" element={<TutorDashboard />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
       </Routes>
     </Router>
   );
