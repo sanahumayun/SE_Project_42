@@ -1,44 +1,127 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./CourseList.css";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [enrollSelection, setEnrollSelection] = useState({});
+  const [removeSelection, setRemoveSelection] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get('/api/courseApi'); 
-        setCourses(res.data);
+        const courseRes = await axios.get("/api/courses/course-list");
+        const studentRes = await axios.get("/api/users?role=student");
+        setCourses(courseRes.data);
+        setStudents(studentRes.data);
       } catch (err) {
-        console.error('Failed to fetch courses', err);
+        console.error("Failed to fetch data", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCourses();
+    fetchData();
   }, []);
 
-  if (loading) return <p>Loading courses...</p>;
+  const handleEnroll = async (courseId, studentId) => {
+    if (!window.confirm("Enroll this student?")) return;
+    try {
+      await axios.post(`/api/courses/${courseId}/enroll`, { studentId });
+      alert("✅ Student enrolled!");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Enrollment failed.");
+    }
+  };
+
+  const handleRemove = async (courseId) => {
+    const studentId = removeSelection[courseId];
+    if (!studentId) return alert("❗ Select a student to remove.");
+    if (!window.confirm("Remove this student?")) return;
+
+    try {
+      await axios.post(`/api/courses/${courseId}/remove-student`, { studentId });
+      alert("✅ Student removed.");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to remove student.");
+    }
+  };
+
+  if (loading) return <p className="loading-message">Loading courses...</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Available Courses</h2>
+    <div className="course-list-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+
+      <h2 className="page-title">Available Courses</h2>
       {courses.length === 0 ? (
-        <p>No courses found.</p>
+        <p className="empty-message">No courses found.</p>
       ) : (
-        <ul className="space-y-4">
+        <div className="course-grid">
           {courses.map((course) => (
-            <li key={course._id} className="p-4 border rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold">{course.title}</h3>
-              <p>{course.description}</p>
-              <p className="text-sm text-gray-600">
-                Instructor: {course.instructor?.name} ({course.instructor?.email})
-              </p>
-            </li>
+            <div key={course._id} className="course-card">
+              <div onClick={() => navigate(`/course/${course._id}`)} className="clickable-course-info">
+                <h3 className="course-title">{course.title}</h3>
+                <p className="course-description">{course.description}</p>
+                <p className="instructor-info">
+                  Instructor: {course.instructorId?.name} ({course.instructorId?.email})
+                </p>
+              </div>
+
+              <div className="student-enrollment">
+                <h4>Enrolled Students</h4>
+                <ul>
+                  {course.studentsEnrolled?.length ? (
+                    course.studentsEnrolled.map((s) => (
+                      <li key={s._id}>{s.name} ({s.email})</li>
+                    ))
+                  ) : (
+                    <li>No students enrolled yet.</li>
+                  )}
+                </ul>
+
+                <div className="enroll-form">
+                  <select
+                    value={enrollSelection[course._id] || ""}
+                    onChange={(e) => setEnrollSelection({ ...enrollSelection, [course._id]: e.target.value })}
+                  >
+                    <option value="">Select student to enroll</option>
+                    {students.map((s) => (
+                      <option key={s._id} value={s._id}>
+                        {s.name} ({s.email})
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={() => handleEnroll(course._id, enrollSelection[course._id])}>Enroll</button>
+                </div>
+
+                <div className="enroll-form">
+                  <select
+                    value={removeSelection[course._id] || ""}
+                    onChange={(e) => setRemoveSelection({ ...removeSelection, [course._id]: e.target.value })}
+                  >
+                    <option value="">Select student to remove</option>
+                    {course.studentsEnrolled?.map((s) => (
+                      <option key={s._id} value={s._id}>
+                        {s.name} ({s.email})
+                      </option>
+                    ))}
+                  </select>
+                  <button className="remove-btn" onClick={() => handleRemove(course._id)}>Remove</button>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
