@@ -10,7 +10,6 @@ import TutorDashboard from "./pages/Dashboards/TutorDashboard";
 import StudentDashboard from "./pages/Dashboards/StudentDashboard";
 
 import CourseList from "./pages/Courses/CourseList";
-import CreateCourse from "./pages/Courses/CreateCourse";
 import TutorUploadAssignment from "./pages/Courses/TutorUploadAssignment";
 import StudentCourseView from "./pages/Courses/StudentCourseView";
 import TutorCourseView from "./pages/Courses/TutorCourseView";
@@ -26,19 +25,7 @@ import { ChatProvider } from "../src/ChatContext";
 import ChatLayout from "../src/components/ChatLayout";
 import "./App.css";
 
-function App() {
-  useEffect(() => {
-    // Retrieve the token from localStorage (assuming you're storing it there)
-    const authToken = localStorage.getItem("authToken");
-
-    // If the token exists, set the Authorization header for all axios requests
-    if (authToken) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
-    } else {
-      delete axios.defaults.headers.common["Authorization"]; // Clear it if no token exists
-    }
-  }, []);
-
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -54,7 +41,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
-
+};
 
 export default App;

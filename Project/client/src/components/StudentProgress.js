@@ -4,16 +4,21 @@ import { getStudentProgress } from '../api/progressApi';
 
 const StudentProgress = () => {
   const [submissions, setSubmissions] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     getStudentProgress()
       .then(res => setSubmissions(res.data))
-      .catch(() => alert("Failed to fetch student progress"));
+      .catch(err => {
+      console.error('Progress fetch failed:', err);
+      setError('Unable to load your progress right now.');
+    });
   }, []);
  
   return (
     <div style={{ padding: '20px' }}>
       <h2>Your Progress</h2>
+      {error && <p>{error}</p>}
 
       {submissions.length === 0 ? (
         <p>No submissions found</p>
