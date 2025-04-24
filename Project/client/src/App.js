@@ -9,13 +9,15 @@ import AdminDashboard from "./pages/Dashboards/AdminDashboard";
 import TutorDashboard from "./pages/Dashboards/TutorDashboard";
 import StudentDashboard from "./pages/Dashboards/StudentDashboard";
 
-import TutorUploadAssignment from "./components/TutorUploadAssignment";
-import StudentCourseView from "./components/StudentCourseView";
+import CourseList from "./pages/Courses/CourseList";
+import CreateCourse from "./pages/Courses/CreateCourse";
+import TutorUploadAssignment from "./pages/Courses/TutorUploadAssignment";
+import StudentCourseView from "./pages/Courses/StudentCourseView";
+import TutorCourseView from "./pages/Courses/TutorCourseView";
+
 import StudentSubmitAssignment from "./components/StudentSubmitAssignment";
 import StudentProgress from "./components/StudentProgress";
 import TutorViewProgress from "./components/TutorViewProgress";
-import CourseList from "./pages/Courses/CourseList";
-import CreateCourse from "./pages/Courses/CreateCourse";
 
 import InstructorReviews from "./components/InstructorReviews";
 import SubmitReviewForm from "./components/SubmitReviewForm";
@@ -44,6 +46,11 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/create-course" element={<CreateCourse />} />
+        <Route path="/course-list" element={<CourseList />} />
+        <Route path="/student-course-view" element={<StudentCourseView />} />
+        <Route path="courses/tutor-course-view" element={<TutorCourseView />} />
+        <Route path="courses/tutor-upload-assignment" element={<TutorUploadAssignment />} />
       </Routes>
     </Router>
   );
