@@ -128,7 +128,7 @@
 
 // client/src/components/ChatSidebar.js
 import React from 'react';
-import { useChatContext } from '../../src/ChatContext';
+import { useChatContext } from '../../ChatContext';
 import './ChatSidebar.css';
 
 const ChatSidebar = ({ onConversationSelect }) => {

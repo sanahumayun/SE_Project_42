@@ -1,9 +1,9 @@
-// // client/src/components/LoginScreen.js
+// // client/src/components/LoginChat.js
 // import React, { useState } from 'react';
 // import { useChatContext } from '../context/ChatContext';
-// import './LoginScreen.css';
+// import './LoginChat.css';
 
-// const LoginScreen = () => {
+// const LoginChat = () => {
 //   const { joinChat } = useChatContext();
 //   const [name, setName] = useState('');
 //   const [userType, setUserType] = useState('student');
@@ -99,14 +99,14 @@
 //   );
 // };
 
-// export default LoginScreen;
+// export default LoginChat;
 
-// client/src/components/LoginScreen.js
+// client/src/components/LoginChat.js
 import React, { useState } from 'react';
-import { useChatContext } from '../../src/ChatContext';
-import './LoginScreen.css';
+import { useChatContext } from '../../ChatContext';
+import './LoginChat.css';
 
-const LoginScreen = () => {
+const LoginChat = () => {
   const { joinChat } = useChatContext();
   const [name, setName] = useState('');
   const [userType, setUserType] = useState('student');
@@ -195,4 +195,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default LoginChat;

@@ -3,7 +3,7 @@
 // import { useChatContext } from '../context/ChatContext';
 // import ChatSidebar from './ChatSidebar';
 // import ChatWindow from './ChatWindow';
-// import LoginScreen from './LoginScreen';
+// import LoginChat from './LoginChat';
 // import './ChatLayout.css';
 
 // const ChatLayout = () => {
@@ -27,7 +27,7 @@
 
 //   // If user is not logged in, show login screen
 //   if (!currentUser) {
-//     return <LoginScreen />;
+//     return <LoginChat />;
 //   }
 
 //   return (
@@ -54,10 +54,10 @@
 
 // client/src/components/ChatLayout.js
 import React, { useState, useEffect } from 'react';
-import { useChatContext } from '../../src/ChatContext';
+import { useChatContext } from '../../../src/ChatContext';
 import ChatSidebar from './ChatSidebar';
 import ChatWindow from './ChatWindow';
-import LoginScreen from './LoginScreen';
+import LoginChat from './LoginChat';
 import './ChatLayout.css';
 
 const ChatLayout = () => {
@@ -79,7 +79,7 @@ const ChatLayout = () => {
   }, []);
 
   if (!currentUser) {
-    return <LoginScreen />;
+    return <LoginChat />;
   }
 
   return (

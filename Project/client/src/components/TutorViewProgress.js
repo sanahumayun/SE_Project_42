@@ -6,15 +6,11 @@ const TutorProgress = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [submissions, setSubmissions] = useState([]);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     getCourses()
       .then(res => setCourses(res.data))
-      .catch(err => {
-        console.error('Error loading courses:', err);
-      setError('Unable to load course list.');
-    });
+      .catch(() => alert('Failed to load courses'));
   }, []);
 
   const handleSelect = async (e) => {
@@ -23,17 +19,14 @@ const TutorProgress = () => {
     try {
       const res = await getTutorProgress(courseId);
       setSubmissions(res.data);
-    } catch (err) {
-      console.error('Error loading submissions:', err);
-      setError('Unable to load student submissions.');
+    } catch {
+      alert('Failed to load submissions');
     }
   };
 
   return (
     <div style={{ padding: '20px' }}>
       <h2>View Student Progress</h2>
-      {error && <p>{error}</p>}
-      {/* remove maybe */}
 
       <select onChange={handleSelect} value={selectedCourse} style={{ padding: '8px', marginBottom: '20px' }}>
         <option value="">Select a Course</option>
