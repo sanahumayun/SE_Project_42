@@ -37,7 +37,11 @@ const progressRoutes = require("./routes/progressRoutes.js");
 const reviewRoutes = require("./routes/reviewRoutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
 const userRoutes = require('./routes/userRoutes');
+
+const badgeRoutes = require("./routes/badgeRoutes.js");
+
 const gradeRoutes = require('./routes/gradeRoutes');
+
 const bodyParser = require("body-parser");
 
 app.use('/api/users', userRoutes);
@@ -47,7 +51,11 @@ app.use("/api/submissions", submissionRoutes);
 app.use("/api/progress", authenticate, checkRole('admin', 'tutor', 'student'), progressRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/chat", chatRoutes); 
+
+app.use('/api/badges', authenticate, checkRole('student'), badgeRoutes);
+
 app.use('/api/grades', gradeRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 

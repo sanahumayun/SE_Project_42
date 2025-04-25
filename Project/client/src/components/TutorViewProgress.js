@@ -63,3 +63,5 @@ const TutorProgress = () => {
 };
 
 export default TutorProgress;
+src/components/TutorViewProgress.jsx
+src/components/TutorViewProgress.jsx
