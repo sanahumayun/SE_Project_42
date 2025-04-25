@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 import "./StudentCourseView.css"
 
 const StudentCourseView = () => {
@@ -10,6 +11,8 @@ const StudentCourseView = () => {
   const [error, setError] = useState("")
   const [submission, setSubmission] = useState({})
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
@@ -81,6 +84,10 @@ const StudentCourseView = () => {
   return (
     <div className="student-course-container">
       <h2 className="page-title">My Enrolled Courses</h2>
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+
       {courses.length === 0 ? (
         <p className="empty-message">You are not enrolled in any courses yet.</p>
       ) : (

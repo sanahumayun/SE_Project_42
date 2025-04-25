@@ -1,4 +1,4 @@
-/* Submit Review Form */
+/* Submit Review Form
 .submit-review-form {
     max-width: 600px;
     margin: 0 auto;
@@ -38,4 +38,84 @@
   .submit-review-form button:hover {
     background-color: #45a049;
   }
-  
+   */
+
+/* SubmitReviewForm.css */
+.review-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-form h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Text input styles */
+.review-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.review-form input[type="text"]:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Textarea styles */
+.review-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+/* Checkbox styles */
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox input {
+  margin-right: 8px;
+}
+
+/* Button styles */
+.review-form button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.review-form button:hover {
+  background-color: #3a80d2;
+}
+
+.review-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

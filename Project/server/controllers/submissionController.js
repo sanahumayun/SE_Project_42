@@ -124,6 +124,35 @@ exports.submitAssignment = async (req, res) => {
 };
 
 /**  GET  /api/submissions/submissions/:assignmentId   (tutor/admin) */
+    // Ensure the student is logged in (auth middleware should set req.user)
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized: Please log in." });
+    }
+
+    const studentId = req.user.id; // Get the studentId from authenticated user
+
+    if (!content) {
+      return res.status(400).json({ message: "Submission content is required." });
+    }
+
+    const submission = new Submission({
+      assignmentId,
+      studentId, // Add the studentId here
+      content,
+    });
+
+    await submission.save();
+
+    return res.status(201).json({
+      message: "Assignment submitted successfully.",
+      submission,
+    });
+  } catch (err) {
+    console.error("Error submitting assignment:", err);
+    return res.status(500).json({ message: "Error submitting assignment." });
+  }
+};
+
 exports.getSubmissionsForAssignment = async (req, res) => {
   try {
     const { assignmentId } = req.params;

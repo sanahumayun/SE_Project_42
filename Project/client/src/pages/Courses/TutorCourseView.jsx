@@ -1,31 +1,45 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import axios from "axios"
-import "./TutorCourseView.css"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./TutorCourseView.css";
 
 const TutorCourseView = () => {
-  const [courses, setCourses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [formData, setFormData] = useState({})
-  const [successMsg, setSuccessMsg] = useState({})
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({});
+  const [successMsg, setSuccessMsg] = useState({});
+  const [submissions, setSubmissions] = useState({}); // New state to store submissions
 
   useEffect(() => {
     const fetchTeachingCourses = async () => {
       try {
-        const res = await axios.get("/api/courses/tutor-course-view", { withCredentials: true })
-        setCourses(res.data)
-        setLoading(false)
+        const res = await axios.get("/api/courses/tutor-course-view", { withCredentials: true });
+        setCourses(res.data);
+        setLoading(false);
       } catch (err) {
-        console.error("Failed to fetch tutor courses:", err.response?.data || err.message)
-        setError("Failed to load your courses.")
-        setLoading(false)
+        console.error("Failed to fetch tutor courses:", err.response?.data || err.message);
+        setError("Failed to load your courses.");
+        setLoading(false);
       }
-    }
+    };
 
-    fetchTeachingCourses()
-  }, [])
+    fetchTeachingCourses();
+  }, []);
+
+  // Fetch submissions for a specific assignment
+  const fetchSubmissionsForAssignment = async (assignmentId) => {
+    try {
+      const res = await axios.get(`/api/submission/${assignmentId}`);
+      setSubmissions((prev) => ({
+        ...prev,
+        [assignmentId]: res.data.submissions,
+      }));
+    } catch (err) {
+      console.error("Failed to fetch submissions:", err);
+    }
+  };
 
   const handleInputChange = (e, courseId) => {
     setFormData((prev) => ({
@@ -34,31 +48,31 @@ const TutorCourseView = () => {
         ...prev[courseId],
         [e.target.name]: e.target.value,
       },
-    }))
-  }
+    }));
+  };
 
   const handleAssignmentUpload = async (courseId) => {
     try {
-      const { title, description, dueDate } = formData[courseId] || {}
+      const { title, description, dueDate } = formData[courseId] || {};
   
       if (!title || !description || !dueDate) {
-        alert("Please fill all assignment fields.")
-        return
+        alert("Please fill all assignment fields.");
+        return;
       }
   
       const uploadRes = await axios.post(
-        `/api/courses/${courseId}/tutor-upload-assignment`, // Use courseId in the URL
+        `/api/courses/${courseId}/tutor-upload-assignment`,
         { title, description, dueDate },
-        { withCredentials: true },
-      )
+        { withCredentials: true }
+      );
   
-      setSuccessMsg((prev) => ({ ...prev, [courseId]: "Assignment uploaded!" }))
-      setFormData((prev) => ({ ...prev, [courseId]: {} })) // Clear form
+      setSuccessMsg((prev) => ({ ...prev, [courseId]: "Assignment uploaded!" }));
+      setFormData((prev) => ({ ...prev, [courseId]: {} }));
     } catch (err) {
-      console.error("Upload failed:", err.response?.data || err.message)
-      alert("Failed to upload assignment.")
+      console.error("Upload failed:", err.response?.data || err.message);
+      alert("Failed to upload assignment.");
     }
-  }  
+  };
 
   const handleStatusChange = async (courseId, newStatus) => {
     try {
@@ -69,18 +83,16 @@ const TutorCourseView = () => {
       );
 
       if (response.data.success) {
-        // Update the local state to reflect the new status
         setCourses((prevCourses) =>
           prevCourses.map((course) =>
             course._id === courseId ? { ...course, status: newStatus } : course
           )
         );
         
-        // Show success message
         document.getElementById(`status-message-${courseId}`).classList.add('show');
         setTimeout(() => {
           document.getElementById(`status-message-${courseId}`).classList.remove('show');
-        }, 3000); // Hide after 3 seconds
+        }, 3000);
       } else {
         console.error("Failed to update course status");
       }
@@ -127,6 +139,27 @@ const TutorCourseView = () => {
                         <h5>{assignment.title}</h5>
                         <p>{assignment.description}</p>
                         <p><strong>Due Date:</strong> {new Date(assignment.dueDate).toLocaleDateString()}</p>
+
+                        {/* Add button to fetch submissions */}
+                        <button onClick={() => fetchSubmissionsForAssignment(assignment._id)}>
+                          View Submissions
+                        </button>
+
+                        {/* Display submissions if available */}
+                        {submissions[assignment._id] && (
+                          <div className="submissions-list">
+                            <h6>Submissions:</h6>
+                            <ul>
+                              {submissions[assignment._id].map((submission) => (
+                                <li key={submission._id}>
+                                  <button onClick={() => alert(submission.content)}>
+                                    {submission.studentId.name} ({new Date(submission.date).toLocaleDateString()})
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -173,13 +206,12 @@ const TutorCourseView = () => {
               <p id={`status-message-${course._id}`} className="status-update-message">
                 Status updated successfully!
               </p>
-
             </li>
           ))}
         </ul>
       )}
     </div>
   );
-}
+};
 
 export default TutorCourseView;
