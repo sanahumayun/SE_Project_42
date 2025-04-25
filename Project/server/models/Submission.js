@@ -22,6 +22,10 @@ const submissionSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    grade: {
+      type: Number,
+      default: 0
+    },
   },
   { timestamps: true }
 );

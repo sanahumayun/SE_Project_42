@@ -23,6 +23,11 @@ const assignmentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  maxScore: {
+    type: Number,
+    required: true,
+    default: 100
+  }
 });
 
 // Create the model for Assignment
