@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const [courses, setCourses] = useState([]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+
+  useEffect(() => {
+    axios.get("/api/courses") // adjust endpoint as needed
+      .then(res => setCourses(res.data))
+      .catch(err => console.error("Failed to fetch courses:", err));
+  }, []);
 
   return (
     <div className="dashboard-layout">
@@ -27,7 +35,7 @@ const AdminDashboard = () => {
         <h1 className="dashboard-heading">Admin Dashboard</h1>
 
         <div className="analytics-cards">
-          <div className="analytics-card">Total Courses: --</div>
+          <div className="analytics-card">Total Courses: {courses.length}</div>
           <div className="analytics-card">Total Tutors: --</div>
           <div className="analytics-card">Total Students: --</div>
         </div>

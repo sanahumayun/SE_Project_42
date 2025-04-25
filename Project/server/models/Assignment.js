@@ -1,43 +1,31 @@
+// models/Assignment.js
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 
-const assignmentSchema = new Schema({
-  course: { 
-    type: Schema.Types.ObjectId, 
-    ref: 'Course', 
-    required: true 
+const assignmentSchema = new mongoose.Schema({
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+    required: true,  // This field will reference the course the assignment belongs to
   },
-  tutor: { 
-    type: Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
+  title: {
+    type: String,
+    required: true,  // Title of the assignment
   },
-  title: { 
-    type: String, 
-    required: true 
+  description: {
+    type: String,
+    required: true,  // Detailed description of the assignment
   },
-  description: { 
-    type: String, 
-    required: true 
+  dueDate: {
+    type: Date,
+    required: true,  // Due date of the assignment
   },
-  dueDate: { 
-    type: Date, 
-    required: true 
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
-  maxScore: { 
-    type: Number, 
-    required: true 
-  },
-  files: [{
-    name: String,
-    path: String
-  }],
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
-  }
 });
 
+// Create the model for Assignment
 const Assignment = mongoose.model('Assignment', assignmentSchema);
 
 module.exports = Assignment;

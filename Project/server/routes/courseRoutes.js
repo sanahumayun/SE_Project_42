@@ -19,4 +19,6 @@ router.post('/:courseId/tutor-upload-assignment',authenticate, checkRole(['tutor
 router.post('/:courseId/enroll', authenticate, checkRole('admin'), courseController.enrollStudent);
 router.post('/:courseId/remove-student', authenticate, checkRole('admin'), courseController.removeStudent);
 
+router.patch('/:id/status', authenticate, checkRole(['tutor']), courseController.updateCourseStatus);
+
 module.exports = router;

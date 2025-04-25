@@ -8,6 +8,7 @@ const StudentCourseView = () => {
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [submission, setSubmission] = useState({})
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -29,6 +30,51 @@ const StudentCourseView = () => {
     fetchEnrolledCourses()
   }, [])
 
+  const handleSubmissionChange = (e, courseId, assignmentId) => {
+    setSubmission((prev) => ({
+      ...prev,
+      [courseId]: {
+        ...prev[courseId],
+        [assignmentId]: e.target.value,
+      },
+    }))
+  }
+
+  const handleSubmitAssignment = async (courseId, assignmentId) => {
+    const content = submission[courseId]?.[assignmentId]
+
+    if (!content) {
+      alert("Please provide your submission.")
+      return
+    }
+
+    try {
+      const authToken = localStorage.getItem("authToken")
+      console.log("Auth token:", authToken);
+      if (!authToken) {
+        alert("You are not logged in!");
+        return;
+      }
+      const res = await axios.post(
+        `http://localhost:5000/api/submission/submit/${assignmentId}`,
+        { content },
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      )
+
+      alert("Assignment submitted successfully!")
+      setSubmission((prev) => ({
+        ...prev,
+        [courseId]: {
+          ...prev[courseId],
+          [assignmentId]: "", // Clear the input after successful submission
+        },
+      }))
+    } catch (err) {
+      console.error("Error submitting assignment:", err)
+      alert("Failed to submit assignment.")
+    }
+  }
+
   if (loading) return <p className="loading-message">Loading your courses...</p>
   if (error) return <p className="error-message">{error}</p>
 
@@ -47,6 +93,38 @@ const StudentCourseView = () => {
                 Instructor: {course.instructorId?.name} ({course.instructorId?.email})
               </p>
               <p className="student-count">Enrolled Students: {course.studentCount}</p>
+              {/* Displaying the assignments for the course */}
+              <div className="assignments-section">
+                <h4>Assignments</h4>
+                {course.assignments.length === 0 ? (
+                  <p>No assignments uploaded yet.</p>
+                ) : (
+                  <ul>
+                    {course.assignments.map((assignment) => (
+                      <li key={assignment._id} className="assignment-item">
+                        <h5>{assignment.title}</h5>
+                        <p>{assignment.description}</p>
+                        <p><strong>Due Date:</strong> {new Date(assignment.dueDate).toLocaleDateString()}</p>
+
+                        {/* Text Box for Submission */}
+                        <textarea
+                          placeholder="Enter your submission here"
+                          value={submission[course._id]?.[assignment._id] || ""}
+                          onChange={(e) => handleSubmissionChange(e, course._id, assignment._id)}
+                          rows="4"
+                          className="submission-textarea"
+                        />
+                        <button
+                          onClick={() => handleSubmitAssignment(course._id, assignment._id)}
+                          className="submit-button"
+                        >
+                          Submit Assignment
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </li>
           ))}
         </ul>

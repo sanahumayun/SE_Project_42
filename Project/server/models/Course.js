@@ -18,7 +18,12 @@ const courseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' // assuming students are also Users
   }],
-  assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }]
+  assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
+  status: {
+    type: String,
+    enum: ['in progress', 'complete'],
+    default: 'in progress'
+  }
 });
 
 courseSchema.virtual('studentCount').get(function () {
