@@ -69,13 +69,11 @@ const CourseList = () => {
         <div className="course-grid">
           {courses.map((course) => (
             <div key={course._id} className="course-card">
-              <div onClick={() => navigate(`/course/${course._id}`)} className="clickable-course-info">
                 <h3 className="course-title">{course.title}</h3>
                 <p className="course-description">{course.description}</p>
                 <p className="instructor-info">
                   Instructor: {course.instructorId?.name} ({course.instructorId?.email})
                 </p>
-              </div>
 
               <div className="student-enrollment">
                 <h4>Enrolled Students</h4>
@@ -88,6 +86,23 @@ const CourseList = () => {
                     <li>No students enrolled yet.</li>
                   )}
                 </ul>
+
+                <div className="assignments-section">
+                <h4>Assignments</h4>
+                {course.assignments.length === 0 ? (
+                  <p>No assignments uploaded yet.</p>
+                ) : (
+                  <ul>
+                    {course.assignments.map((assignment) => (
+                      <li key={assignment._id} className="assignment-item">
+                        <h5>{assignment.title}</h5>
+                        <p>{assignment.description}</p>
+                        <p><strong>Due Date:</strong> {new Date(assignment.dueDate).toLocaleDateString()}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
 
                 <div className="enroll-form">
                   <select

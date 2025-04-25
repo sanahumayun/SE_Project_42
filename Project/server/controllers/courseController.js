@@ -1,12 +1,14 @@
 const Course = require('../models/Course');
 const User = require('../models/User');
+const Assignment = require('../models/Assignment');
 
 // 1. Get ALL public courses (no auth required)
 exports.getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find({}, 'title description instructorId')
       .populate('instructorId', 'name email') // only include name/email from user
-      .populate('studentsEnrolled', 'name email');
+      .populate('studentsEnrolled', 'name email')
+      .populate('assignments');
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch courses' });
@@ -55,7 +57,7 @@ exports.getTutorCourses = async (req, res) => {
 
     // Find courses with population if needed
     const courses = await Course.find({ instructorId: tutorId })
-      .populate('studentsEnrolled', 'name email'); // Optional: populate enrolled students
+      .populate('studentsEnrolled', 'name email'); 
 
     if (!courses.length) {
       console.log(`No courses found for tutor: ${tutorId}`);
@@ -170,5 +172,30 @@ exports.uploadAssignment = async (req, res) => {
   } catch (err) {
     console.error('Error uploading assignment:', err);
     res.status(500).json({ error: 'Failed to upload assignment', details: err.message });
+  }
+};
+
+exports.updateCourseStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const validStatuses = ['in progress', 'complete'];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value.' });
+    }
+
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found.' });
+    }
+
+    res.status(200).json(course);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
