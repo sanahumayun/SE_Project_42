@@ -130,6 +130,9 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
+
+        <Route path="/student-progress" element={<StudentProgress />} />
+        <Route path="/tutor-progress" element={<TutorViewProgress />} />
         
         <Route path="/tutor-dashboard/grade" element={<GradeSubmissions />} />
         <Route path="/student-dashboard/submit-assignment" element={<StudentSubmitAssignment />} />
