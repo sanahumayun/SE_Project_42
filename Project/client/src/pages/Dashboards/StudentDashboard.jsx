@@ -16,11 +16,6 @@ const StudentDashboard = () => {
         <h2 className="sidebar-title">Student</h2>
         <nav className="sidebar-nav">
           <Link to="/student-course-view" className="nav-link">My Enrolled Courses</Link>
-
-          <Link to="/student-badges" className="nav-link">My Awards</Link>
-          <Link to="/student-progress" className="nav-link">My Progress</Link>
-
-
           <Link to="/submit-review-form" className="nav-link">Review Instructors</Link>
           <Link to="/chat" className="nav-link">Chat with Tutor</Link>
           <button className="logout-button" onClick={handleLogout}>Logout</button>

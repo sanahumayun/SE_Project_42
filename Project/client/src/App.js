@@ -17,7 +17,6 @@ import CreateCourse from "./pages/Courses/CreateCourse";
 
 import InstructorReviews from "./components/InstructorReviews";
 import SubmitReviewForm from "./components/SubmitReviewForm";
-import StudentBadgesPage from "./pages/StudentBadgePage";
 import CreateTutor from "./pages/Create_Accounts/CreateTutor";
 import CreateStudent from "./pages/Create_Accounts/CreateStudent";
 
@@ -130,17 +129,12 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
-        
-        <Route path="/tutor-dashboard/grade" element={<GradeSubmissions />} />
-        <Route path="/student-dashboard/submit-assignment" element={<StudentSubmitAssignment />} />
-        
         <Route path="/create-course" element={<CreateCourse />} />
         <Route path="/create-tutor" element={<CreateTutor />} />
         <Route path="/create-student" element={<CreateStudent />} />
         <Route path="/course-list" element={<CourseList />} />
         <Route path="/student-course-view" element={<StudentCourseView />} />
         <Route path="/submit-review-form" element={<SubmitReviewForm />} />
-        <Route path="/student-badges" element={<StudentBadgesPage />} />
         <Route path="courses/tutor-course-view" element={<TutorCourseView />} />
         <Route path="courses/tutor-upload-assignment" element={<TutorUploadAssignment />} />
         {/* Chat Routes */}
