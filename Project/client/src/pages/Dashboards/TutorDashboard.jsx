@@ -16,7 +16,6 @@ const TutorDashboard = () => {
         <h2 className="sidebar-title">Tutor</h2>
         <nav className="sidebar-nav">
           <Link to="/courses/tutor-course-view" className="nav-link">My Teaching Courses</Link>
-          <Link to="/courses/tutor-upload-assignment" className="nav-link">Upload Assignments</Link>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </nav>
       </aside>
