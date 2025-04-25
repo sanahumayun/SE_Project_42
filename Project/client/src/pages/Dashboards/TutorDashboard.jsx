@@ -10,7 +10,6 @@ const TutorDashboard = () => {
     navigate("/")
   }
 
-
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
@@ -20,7 +19,6 @@ const TutorDashboard = () => {
 
           <Link to="/tutor-progress" className="nav-link">View Students Progress</Link>
 
-          <Link to="/tutor-dashboard/grade" className="nav-link">Grade&nbsp;Submissions</Link>
           <Link to="/chat" className="nav-link">
             Chat with Student
           </Link>

@@ -1,4 +1,4 @@
-/* Student Submit Assignment
+/* Student Submit Assignment */
 .student-submit-assignment {
     max-width: 600px;
     margin: 0 auto;
@@ -37,68 +37,5 @@
   
   .student-submit-assignment button:hover {
     background-color: #45a049;
-  }
-   */
-
-   .sa-wrapper {
-    max-width: 720px;
-    margin: 2rem auto;
-    background: #f8fcff;             /* very light blue (matches cards) */
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  }
-  
-  .sa-title {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #0e1e40;
-  }
-  
-  .sa-row {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  
-  .sa-row select,
-  .sa-row input {
-    padding: 0.45rem 0.6rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 0.95rem;
-  }
-  
-  .sa-row select:disabled,
-  .sa-row input:disabled {
-    background: #f1f5f9;
-    cursor: not-allowed;
-  }
-  
-  .sa-submit-btn {
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    padding: 0.45rem 1.15rem;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  
-  .sa-submit-btn:hover:not([disabled]) {
-    background: #1e4fd8;
-  }
-  
-  .sa-submit-btn[disabled] {
-    background: #94a3b8;
-    cursor: not-allowed;
-  }
-  
-  .sa-info {
-    margin-bottom: 1rem;
-    color: #475569;
   }
   
