@@ -18,6 +18,9 @@ const TutorDashboard = () => {
         <nav className="sidebar-nav">
           <Link to="/courses/tutor-course-view" className="nav-link">My Teaching Courses</Link>
           <Link to="/tutor-dashboard/grade" className="nav-link">Grade&nbsp;Submissions</Link>
+          <Link to="/chat" className="nav-link">
+            Chat with Student
+          </Link>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
         </nav>
       </aside>
