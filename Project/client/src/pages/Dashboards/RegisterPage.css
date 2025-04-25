@@ -1,0 +1,79 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: transparent;
+  }
+  
+  .register-card {
+    background: var(--bg-card);
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .register-card h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .register-card input,
+  .register-card select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .register-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-card button:hover:not(:disabled) {
+    background-color: #e68900;
+  }
+  
+  .register-card button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .register-card p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .register-card a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .register-card a:hover {
+    text-decoration: underline;
+  }
+  
+  .error-message {
+    color: #d32f2f;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  

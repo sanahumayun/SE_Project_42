@@ -1,27 +1,34 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware to authenticate JWT tokens
 function authenticate(req, res, next) {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-  
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Authorization token missing" });
   }
 
+  const token = authHeader.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user information to the request
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = {
+      id:   payload.id,
+      role: payload.role,
+      name: payload.name
+    };
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(403).json({ message: "Invalid token" });
   }
 }
 
-// Middleware to check user role
 function checkRole(role) {
   return (req, res, next) => {
-    if (req.user?.role !== role) {
-      return res.status(403).json({ message: 'Access denied' });
+    if (!req.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    if (req.user.role !== expectedRole) {
+      return res.status(403).json({
+        message: `Forbidden: requires ${expectedRole} role, you are ${req.user.role}`
+      });
     }
     next();
   };

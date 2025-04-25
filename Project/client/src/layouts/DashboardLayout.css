@@ -1,0 +1,12 @@
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-canvas);
+}
+  
+  .main-content {
+    flex: 1;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    overflow-y: auto;
+  }

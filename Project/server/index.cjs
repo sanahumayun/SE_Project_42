@@ -5,28 +5,41 @@ const http = require("http");
 const socketIo = require("socket.io");
 require("dotenv").config();
 
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Dummy middleware to attach user to req (FOR TESTING PURPOSES ONLY)
-app.use((req, res, next) => {
-  req.user = {
-    _id: "606c5f4b5f1b2b001f0c0f0a", // replace with a valid ID from MongoDB
-    role: "student", // change this to 'admin', 'tutor', or 'student' to test roles
-  };
-  next();
-});
-
 // Routes
+const authRoutes       = require('./routes/authRoutes');
 const courseRoutes = require("./routes/courseRoutes.js");
 const assignmentRoutes = require("./routes/assignmentRoutes.js");
 const submissionRoutes = require("./routes/submissionRoutes.js");
 const progressRoutes = require("./routes/progressRoutes.js");
 const reviewRoutes = require("./routes/reviewRoutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
+const { authenticate } = require('./middleware/authMiddleware');
+
+const app = express();
+
+// Middleware
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/auth', authRoutes);
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+app.use(authenticate);
+
+// Dummy middleware to attach user to req (FOR TESTING PURPOSES ONLY)
+// app.use((req, res, next) => {
+//   req.user = {
+//     _id: "606c5f4b5f1b2b001f0c0f0a", // replace with a valid ID from MongoDB
+//     role: "student", // change this to 'admin', 'tutor', or 'student' to test roles
+//   };
+//   next();
+// });
 
 app.use("/api/courses", courseRoutes);
 app.use("/api/assignments", assignmentRoutes);
@@ -39,12 +52,20 @@ app.get("/", (req, res) => {
   res.send("Chat Server is running");
 });
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something broke!' });
+});
+
 // Define the port; default to 8000 if PORT isn't set in the environment
 const PORT = process.env.PORT || 8000;
 
 // Connect to MongoDB and then start the server
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("MongoDB connected");
 

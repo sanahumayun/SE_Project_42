@@ -1,0 +1,39 @@
+.student-dashboard {
+    padding: 2rem;
+    background-color: #f0f4f8;
+    min-height: 100vh;
+  }
+  
+  .student-dashboard h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .student-dashboard .subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .student-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .student-actions button {
+    padding: 14px 20px;
+    background-color: #2196f3;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+  }
+  
+  .student-actions button:hover {
+    background-color: #1a78c2;
+  }
+  
