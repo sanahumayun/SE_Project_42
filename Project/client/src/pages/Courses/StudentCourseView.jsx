@@ -58,6 +58,7 @@ const StudentCourseView = () => {
         alert("You are not logged in!");
         return;
       }
+      console.log("Submitting for:", { assignmentId, courseId });
       const res = await axios.post(
         `http://localhost:5000/api/submission/submit/${assignmentId}`,
         { content },
@@ -83,11 +84,12 @@ const StudentCourseView = () => {
 
   return (
     <div className="student-course-container">
-      <h2 className="page-title">My Enrolled Courses</h2>
       <button className="back-button" onClick={() => navigate(-1)}>
         ← Back
       </button>
-
+  
+      <h2 className="page-title">My Enrolled Courses</h2>
+  
       {courses.length === 0 ? (
         <p className="empty-message">You are not enrolled in any courses yet.</p>
       ) : (
@@ -100,20 +102,22 @@ const StudentCourseView = () => {
                 Instructor: {course.instructorId?.name} ({course.instructorId?.email})
               </p>
               <p className="student-count">Enrolled Students: {course.studentCount}</p>
-              {/* Displaying the assignments for the course */}
+  
               <div className="assignments-section">
                 <h4>Assignments</h4>
                 {course.assignments.length === 0 ? (
-                  <p>No assignments uploaded yet.</p>
+                  <p className="no-assignments">No assignments uploaded yet.</p>
                 ) : (
-                  <ul>
+                  <ul className="assignment-list">
                     {course.assignments.map((assignment) => (
                       <li key={assignment._id} className="assignment-item">
                         <h5>{assignment.title}</h5>
                         <p>{assignment.description}</p>
-                        <p><strong>Due Date:</strong> {new Date(assignment.dueDate).toLocaleDateString()}</p>
-
-                        {/* Text Box for Submission */}
+                        <p>
+                          <strong>Due Date:</strong>{" "}
+                          {new Date(assignment.dueDate).toLocaleDateString()}
+                        </p>
+  
                         <textarea
                           placeholder="Enter your submission here"
                           value={submission[course._id]?.[assignment._id] || ""}
@@ -121,6 +125,7 @@ const StudentCourseView = () => {
                           rows="4"
                           className="submission-textarea"
                         />
+  
                         <button
                           onClick={() => handleSubmitAssignment(course._id, assignment._id)}
                           className="submit-button"
@@ -137,7 +142,7 @@ const StudentCourseView = () => {
         </ul>
       )}
     </div>
-  )
+  );
 }
-
+  
 export default StudentCourseView

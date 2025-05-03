@@ -1,4 +1,5 @@
-// // const Course = require('../models/Course');
+
+const Assignment = require('../models/Assignment');
 // // const User = require('../models/User');
 // // const ChatRoom = require('../models/ChatRoom');
 
@@ -661,7 +662,8 @@ exports.getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find({}, 'title description instructorId')
       .populate('instructorId', 'name email') // only include name/email from user
-      .populate('studentsEnrolled', 'name email');
+      .populate('studentsEnrolled', 'name email')
+      .populate('assignments');
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch courses' });
@@ -687,14 +689,14 @@ exports.createCourse = async (req, res) => {
     
     // Create chat room for the course
     console.log('Calling updateChatRoom with:', newCourse._id, instructorId);
-
-    await updateChatRoom(newCourse._id, instructorId);
     
     res.status(201).json(newCourse);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: 'Failed to create course' });
   }
+
+  await updateChatRoom(newCourse._id, instructorId);
 };
 
 // In the getMyEnrolledCourses controller
@@ -760,15 +762,16 @@ exports.enrollStudent = async (req, res) => {
     }
 
     course.studentsEnrolled.push(studentId);
-    await course.save();
 
     // Update chat room with new student
-    await updateChatRoom(courseId, course.instructorId, course.studentsEnrolled);
-
     res.status(200).json({ message: 'Student enrolled successfully', course });
   } catch (err) {
     res.status(500).json({ error: 'Failed to enroll student', details: err.message });
   }
+
+  await course.save();
+  await updateChatRoom(courseId, course.instructorId, course.studentsEnrolled);
+
 };
 
 // Enroll a student in a course

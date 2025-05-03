@@ -1,16 +1,29 @@
-/* General Styling */
 .student-course-container {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f4f8fc; /* Light background */
+  max-width: 900px;
+  margin: 40px auto;
   padding: 20px;
-  border-radius: 8px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .page-title {
-  font-size: 2rem;
-  color: #1a3c7c; /* Dark Blue */
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.back-button {
   margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.empty-message {
+  text-align: center;
+  color: #777;
 }
 
 .course-list {
@@ -19,137 +32,75 @@
 }
 
 .course-item {
-  background-color: #ffffff; /* White background */
-  border-radius: 8px;
+  border: 1px solid #ddd;
   padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid #1a3c7c; /* Blue border to highlight */
-}
-
-.course-header {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
 }
 
 .course-title {
-  font-size: 1.5rem;
-  color: #1a3c7c; /* Dark Blue */
+  font-size: 22px;
   margin-bottom: 5px;
 }
 
 .course-description {
-  font-size: 1rem;
+  margin-bottom: 10px;
   color: #555;
-}
-
-.course-info {
-  margin-top: 15px;
-  font-size: 1rem;
-  color: #333;
 }
 
 .instructor-info,
 .student-count {
-  margin: 5px 0;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #444;
 }
 
 .assignments-section {
   margin-top: 20px;
-  border-top: 2px solid #1a3c7c; /* Blue border to separate assignments */
-  padding-top: 15px;
 }
 
-.assignments-list {
+.assignment-list {
   list-style-type: none;
-  padding: 0;
+  padding-left: 0;
 }
 
 .assignment-item {
-  background-color: #ffffff;
   padding: 15px;
-  margin: 10px 0;
-  border: 1px solid #e0e7ff; /* Light Blue border for assignment items */
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.assignment-item h5 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #1a3c7c; /* Dark Blue */
-}
-
-.assignment-item p {
-  margin: 5px 0;
-  color: #555;
-}
-
-.no-assignments {
-  font-style: italic;
-  color: #888;
-}
-
-.empty-message {
-  color: #888;
-  font-size: 1.2rem;
-}
-
-.loading-message,
-.error-message {
-  font-size: 1.2rem;
-  text-align: center;
-  color: #ff6f61; /* Red for error and loading */
-}
-
-.student-course-container .course-item:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slight hover effect for course items */
-}
-
-.student-course-container .course-title:hover {
-  color: #ff6f61; /* Hover effect on course title */
-}
-
-.course-info strong {
-  color: #1a3c7c; /* Blue for labels like Instructor and Students */
-}
-
-.assignments-section h4 {
-  color: #1a3c7c; /* Blue for assignments section */
-}
-
-/* Additional styles for submission text box and button */
-.submission-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  color: #333;
+  border-radius: 8px;
+  margin-bottom: 15px;
   background-color: #f9f9f9;
 }
 
-.submission-textarea:focus {
-  outline-color: #1a3c7c; /* Focus outline with blue */
+.submission-textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  font-family: inherit;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
 }
 
 .submit-button {
   margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #1a3c7c; /* Blue button */
+  padding: 8px 16px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
 .submit-button:hover {
-  background-color: #2a56a2; /* Darker blue on hover */
+  background-color: #45a049;
 }
 
-.submit-button:disabled {
-  background-color: #b0b0b0; /* Disabled state */
-  cursor: not-allowed;
+.no-assignments {
+  font-style: italic;
+  color: #666;
 }
-

@@ -31,7 +31,7 @@ const TutorCourseView = () => {
   // Fetch submissions for a specific assignment
   const fetchSubmissionsForAssignment = async (assignmentId) => {
     try {
-      const res = await axios.get(`/api/submission/${assignmentId}`);
+      const res = await axios.get(`http://localhost:5000/api/submission/${assignmentId}`);
       setSubmissions((prev) => ({
         ...prev,
         [assignmentId]: res.data.submissions,

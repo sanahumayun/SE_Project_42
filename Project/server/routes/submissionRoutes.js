@@ -5,8 +5,8 @@ const router = express.Router();
 const { submitAssignment, getSubmissionsForAssignment } = require("../controllers/submissionController");
 const {authenticate, checkRole} = require("../middleware/authMiddleware");  // Assuming protect middleware to handle authentication
 
-router.post('/submit/:assignmentId', authenticate, checkRole(['student']), (req, res, next) => {
-    // console.log("📡 submission route matched!");
+router.post("/submit/:assignmentId", authenticate, checkRole(['student']), (req, res, next) => {
+    console.log("📡 submission route matched!");
     next(); // pass control to the actual controller
   }, submitAssignment);
   
