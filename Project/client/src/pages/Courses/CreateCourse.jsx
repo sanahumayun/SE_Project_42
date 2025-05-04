@@ -20,7 +20,7 @@ const CreateCourse = () => {
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
-        const res = await axios.get("/api/users?role=tutor");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users?role=tutor`);
         setInstructors(res.data);
       } catch (err) {
         console.error("Error fetching instructors:", err.response?.data || err.message);
@@ -34,7 +34,7 @@ const CreateCourse = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "/api/courses",
+        `${process.env.REACT_APP_API_BASE_URL}/courses`,
         { title, description, instructorId },
         config
       );

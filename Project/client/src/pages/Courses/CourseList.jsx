@@ -15,8 +15,8 @@ const CourseList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const courseRes = await axios.get("/api/courses/course-list");
-        const studentRes = await axios.get("/api/users?role=student");
+        const courseRes = await axios.get( `${process.env.REACT_APP_API_BASE_URL}/courses/course-list`);
+        const studentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users?role=student`);
         setCourses(courseRes.data);
         setStudents(studentRes.data);
       } catch (err) {
@@ -32,7 +32,7 @@ const CourseList = () => {
   const handleEnroll = async (courseId, studentId) => {
     if (!window.confirm("Enroll this student?")) return;
     try {
-      await axios.post(`/api/courses/${courseId}/enroll`, { studentId });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/enroll`, { studentId });
       alert("✅ Student enrolled!");
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ const CourseList = () => {
     if (!window.confirm("Remove this student?")) return;
 
     try {
-      await axios.post(`/api/courses/${courseId}/remove-student`, { studentId });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/remove-student`, { studentId });
       alert("✅ Student removed.");
     } catch (err) {
       console.error(err);

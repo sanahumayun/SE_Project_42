@@ -18,7 +18,7 @@ const StudentCourseView = () => {
       try {
         const authToken = localStorage.getItem("authToken")
         console.log("Using auth token:", authToken) // Check the token
-        const res = await axios.get("http://localhost:5000/api/courses/student-course-view", {
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/courses/student-course-view`, {
           headers: { Authorization: `Bearer ${authToken}` },
         })
         setCourses(res.data)
@@ -60,7 +60,7 @@ const StudentCourseView = () => {
       }
       console.log("Submitting for:", { assignmentId, courseId });
       const res = await axios.post(
-        `http://localhost:5000/api/submission/submit/${assignmentId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/submission/submit/${assignmentId}`,
         { content },
         { headers: { Authorization: `Bearer ${authToken}` } }
       )

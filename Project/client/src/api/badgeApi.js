@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-const BADGE_ENDPOINT = `${API_BASE}/api/badges`;
+const BADGE_ENDPOINT = `${process.env.REACT_APP_API_BASE_URL}/badges`;
 
 // Fetch all badges the current student has earned
 export const getMyBadges = () =>

@@ -14,7 +14,7 @@ const TutorCourseView = () => {
   useEffect(() => {
     const fetchTeachingCourses = async () => {
       try {
-        const res = await axios.get("/api/courses/tutor-course-view", { withCredentials: true })
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/courses/tutor-course-view`, { withCredentials: true })
         setCourses(res.data)
         setLoading(false)
       } catch (err) {
@@ -47,7 +47,7 @@ const TutorCourseView = () => {
       }
 
       const res = await axios.post(
-        `/api/courses/tutor-upload-assignment/${courseId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/courses/tutor-upload-assignment/${courseId}`,
         { title, description, dueDate },
         { withCredentials: true },
       )

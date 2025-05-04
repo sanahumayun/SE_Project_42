@@ -12,11 +12,11 @@ const AdminDashboard = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    axios.get("/api/courses") // adjust endpoint as needed
-      .then(res => setCourses(res.data))
-      .catch(err => console.error("Failed to fetch courses:", err));
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${process.env.REACT_APP_API_BASE_URL}/courses`) // adjust endpoint as needed
+  //     .then(res => setCourses(res.data))
+  //     .catch(err => console.error("Failed to fetch courses:", err));
+  // }, []);
 
   return (
     <div className="dashboard-layout">

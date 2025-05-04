@@ -15,7 +15,7 @@ const TutorCourseView = () => {
   useEffect(() => {
     const fetchTeachingCourses = async () => {
       try {
-        const res = await axios.get("/api/courses/tutor-course-view", { withCredentials: true });
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/courses/tutor-course-view`, { withCredentials: true });
         setCourses(res.data);
         setLoading(false);
       } catch (err) {
@@ -31,7 +31,7 @@ const TutorCourseView = () => {
   // Fetch submissions for a specific assignment
   const fetchSubmissionsForAssignment = async (assignmentId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/submission/${assignmentId}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/submission/${assignmentId}`);
       setSubmissions((prev) => ({
         ...prev,
         [assignmentId]: res.data.submissions,
@@ -61,7 +61,7 @@ const TutorCourseView = () => {
       }
   
       const uploadRes = await axios.post(
-        `/api/courses/${courseId}/tutor-upload-assignment`,
+        `${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/tutor-upload-assignment`,
         { title, description, dueDate },
         { withCredentials: true }
       );
@@ -77,7 +77,7 @@ const TutorCourseView = () => {
   const handleStatusChange = async (courseId, newStatus) => {
     try {
       const response = await axios.patch(
-        `/api/courses/${courseId}/status`,
+        `${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/status`,
         { status: newStatus },
         { withCredentials: true }
       );

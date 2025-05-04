@@ -45,7 +45,7 @@ import axios from 'axios';
 //change: import getCurrentUserId if you need to automatically add student ID
 // import { getCurrentUserId } from '../utils/auth';
 
-const API_URL = '/api/reviews';
+const API_URL = `${process.env.REACT_APP_API_BASE_URL}/reviews`;
 
 // Create a new review
 export const createReview = async (reviewData) => {

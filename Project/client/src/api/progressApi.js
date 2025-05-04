@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5000/api/progress';
+const API_BASE = `${process.env.REACT_APP_API_BASE_URL}/progress`;
 
 // Get student progress (their own submissions)
 export const getStudentProgress = async () => {

@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form)
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, form)
       const token = res.data.token // The JWT token from the backend
       const user = res.data.user // User data from the backend
 
