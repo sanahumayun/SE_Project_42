@@ -3,14 +3,14 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import "./CreateStudent.css"
+import "./CreateTutor.css"
 
-const CreateStudent = () => {
+const CreateTutor = () => {
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
-    role: "student", // fixed role
+    role: "tutor",
   })
 
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ const CreateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", form)
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/signup`, form)
       alert(res.data.message || "Tutor created successfully!")
     } catch (err) {
       alert(err.response?.data?.error || "Error creating tutor")
@@ -28,11 +28,11 @@ const CreateStudent = () => {
   }
 
   return (
-    <div className="create-student-container">
+    <div className="create-tutor-container">
       <button onClick={() => navigate("/admin-dashboard")} className="back-button">
         BACK
       </button>
-      <form onSubmit={handleSubmit} className="student-form">
+      <form onSubmit={handleSubmit} className="tutor-form">
         <h2 className="form-title">Create Tutor Profile</h2>
         <div className="form-group">
           <input
@@ -64,4 +64,4 @@ const CreateStudent = () => {
   )
 }
 
-export default CreateStudent
+export default CreateTutor;

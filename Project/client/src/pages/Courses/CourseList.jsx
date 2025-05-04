@@ -15,8 +15,8 @@ const CourseList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const courseRes = await axios.get("/api/courses/course-list");
-        const studentRes = await axios.get("/api/users?role=student");
+        const courseRes = await axios.get( `${process.env.REACT_APP_API_BASE_URL}/courses/course-list`);
+        const studentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users?role=student`);
         setCourses(courseRes.data);
         setStudents(studentRes.data);
       } catch (err) {

@@ -123,26 +123,21 @@ app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes")); 
 app.use('/api/badges', authenticate, checkRole('student'), require("./routes/badgeRoutes"));
 
-// Health check endpoint
-app.get('/api/healthcheck', (req, res) => {
-  res.status(200).json({ status: 'healthy' });
-});
+const server = http.createServer(app);
 
-// Socket.io initialization (for local development only)
-if (process.env.NODE_ENV !== 'production') {
-  const server = http.createServer(app);
-  const io = socketIo(server, {
-    cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:3000",
-      methods: ["GET", "POST"],
-    },
-  });
-  require("./socket/socket")(io);
-  
-  server.listen(PORT, () => {
-    console.log(`🚀 Local server running on port ${PORT}`);
-  });
-}
+// Always init socket and server
+const io = socketIo(server, {
+  cors: {
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+require("./socket/socket")(io);
+
+// Start the server on the correct port (Render requires this)
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
 // Critical for Vercel deployment
 module.exports = app;
