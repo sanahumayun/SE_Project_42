@@ -172,7 +172,7 @@ export const ChatProvider = ({ children }) => {
 
     setLoading(true);
 
-    axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/chat/messages/${currentUser.userId}/${recipientId}`)
+    axios.get(`${process.env.REACT_APP_BASE_API_URL}/chat/messages/${currentUser.userId}/${recipientId}`)
       .then(response => {
         setMessages(response.data.messages);
         setLoading(false);
@@ -190,7 +190,7 @@ export const ChatProvider = ({ children }) => {
 
   const createRoom = useCallback(async (roomData) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/chat/rooms`, roomData);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/chat/rooms`, roomData);
       setChatRooms(prev => [...prev, response.data]);
       return response.data;
     } catch (error) {
