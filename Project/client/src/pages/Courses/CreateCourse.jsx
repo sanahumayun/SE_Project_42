@@ -42,7 +42,7 @@ const CreateCourse = () => {
       setTitle("");
       setDescription("");
       setInstructorId("");
-      setSuccessMessage("✅ Course created successfully!");
+      setSuccessMessage("✅ Course and chatroom created successfully!");
     } catch (err) {
       console.error("Course creation failed:", err);
       setSuccessMessage("❌ Failed to create course.");

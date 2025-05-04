@@ -33,7 +33,7 @@ const CourseList = () => {
     if (!window.confirm("Enroll this student?")) return;
     try {
       await axios.post(`/api/courses/${courseId}/enroll`, { studentId });
-      alert("✅ Student enrolled!");
+      alert("✅ Student enrolled and added to chatroom!");
     } catch (err) {
       console.error(err);
       alert("❌ Enrollment failed.");
@@ -47,7 +47,7 @@ const CourseList = () => {
 
     try {
       await axios.post(`/api/courses/${courseId}/remove-student`, { studentId });
-      alert("✅ Student removed.");
+      alert("✅ Student removed from course and chatroom.");
     } catch (err) {
       console.error(err);
       alert("❌ Failed to remove student.");

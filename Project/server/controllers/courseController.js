@@ -539,35 +539,46 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const ChatRoom = require('../models/ChatRoom');
 
+
 // const updateChatRoom = async (courseId, instructorId, students = []) => {
 //   try {
-//     let chatRoom = await ChatRoom.findOne({ courseId });
-    
+//     console.log('🔧 Checking/creating chat room for course:', courseId);
+
+//     // Check if the chat room already exists for this course
+//     let chatRoom = await ChatRoom.findOne({ courseId:courseId });
+
+//     // If no chat room exists for the course, create a new one
 //     if (!chatRoom) {
+//       console.log('🆕 Creating new chat room for course:', courseId);
+      
 //       chatRoom = new ChatRoom({
-//         courseId,
-//         participants: [{ userId: instructorId, role: 'tutor' }]
+//         courseId,  // Use courseId to link the chat room to the course
+//         participants: [{ userId: instructorId, role: 'tutor' }] // Add the instructor
 //       });
+
+//       // Add students to the chat room
+//       const studentParticipants = students.map(studentId => ({
+//         userId: studentId,
+//         role: 'student'
+//       }));
+
+//       chatRoom.participants = [
+//         ...new Map([
+//           ...chatRoom.participants.map(p => [p.userId.toString(), p]),
+//           ...studentParticipants.map(p => [p.userId.toString(), p])
+//         ]).values()
+//       ];
+
+//       // Save the new chat room
+//       await chatRoom.save();
+//       console.log('✅ New chat room created and saved:', chatRoom._id);
+//     } else {
+//       console.log('✅ Chat room already exists for course:', courseId);
 //     }
 
-//     // Add students to chat room
-//     const studentParticipants = students.map(studentId => ({
-//       userId: studentId,
-//       role: 'student'
-//     }));
-
-//     // Combine and remove duplicates
-//     chatRoom.participants = [
-//       ...new Map([
-//         ...chatRoom.participants.map(p => [p.userId.toString(), p]),
-//         ...studentParticipants.map(p => [p.userId.toString(), p])
-//       ]).values()
-//     ];
-
-//     await chatRoom.save();
 //     return chatRoom;
 //   } catch (err) {
-//     console.error('Error updating chat room:', err);
+//     console.error('Error updating or creating chat room:', err);
 //     throw err;
 //   }
 // };
@@ -575,85 +586,54 @@ const updateChatRoom = async (courseId, instructorId, students = []) => {
   try {
     console.log('🔧 Checking/creating chat room for course:', courseId);
 
-    // Check if the chat room already exists for this course
+    // Find existing chat room
     let chatRoom = await ChatRoom.findOne({ courseId });
 
-    // If no chat room exists for the course, create a new one
+    const studentParticipants = students.map(studentId => ({
+      userId: studentId,
+      role: 'student'
+    }));
+
     if (!chatRoom) {
       console.log('🆕 Creating new chat room for course:', courseId);
-      
+
       chatRoom = new ChatRoom({
-        courseId,  // Use courseId to link the chat room to the course
-        participants: [{ userId: instructorId, role: 'tutor' }] // Add the instructor
+        courseId,
+        participants: [
+          { userId: instructorId, role: 'tutor' },
+          ...studentParticipants
+        ]
       });
 
-      // Add students to the chat room
-      const studentParticipants = students.map(studentId => ({
-        userId: studentId,
-        role: 'student'
-      }));
-
-      chatRoom.participants = [
-        ...new Map([
-          ...chatRoom.participants.map(p => [p.userId.toString(), p]),
-          ...studentParticipants.map(p => [p.userId.toString(), p])
-        ]).values()
-      ];
-
-      // Save the new chat room
-      await chatRoom.save();
-      console.log('✅ New chat room created and saved:', chatRoom._id);
     } else {
-      console.log('✅ Chat room already exists for course:', courseId);
+      console.log('✅ Chat room already exists. Updating participants.');
+
+      // Merge existing participants with new students
+      const existingParticipantsMap = new Map(
+        chatRoom.participants.map(p => [p.userId.toString(), p])
+      );
+
+      for (const student of studentParticipants) {
+        if (!existingParticipantsMap.has(student.userId.toString())) {
+          existingParticipantsMap.set(student.userId.toString(), student);
+        }
+      }
+
+      chatRoom.participants = Array.from(existingParticipantsMap.values());
     }
 
+    await chatRoom.save();
+    console.log('✅ Chat room saved:', chatRoom._id);
+
     return chatRoom;
+
   } catch (err) {
     console.error('Error updating or creating chat room:', err);
     throw err;
   }
 };
 
-// const updateChatRoom = async (courseId, instructorId, students = []) => {
-//   try {
-//     console.log('New course ID:', newCourse._id);
 
-//     console.log('🔧 Checking/creating chat room for course:', courseId);
-//     let chatRoom = await ChatRoom.findOne({ courseId });
-    
-//     if (!chatRoom) {
-//       console.log('🆕 Creating new chat room');
-
-//       chatRoom = new ChatRoom({
-//         courseId,
-//         participants: [{ userId: instructorId, role: 'tutor' }]
-//       });
-      
-//     }
-
-//     const studentParticipants = students.map(studentId => ({
-//       userId: studentId,
-//       role: 'student'
-//     }));
-
-//     chatRoom.participants = [
-//       ...new Map([
-//         ...chatRoom.participants.map(p => [p.userId.toString(), p]),
-//         ...studentParticipants.map(p => [p.userId.toString(), p])
-//       ]).values()
-//     ];
-
-//     // ✅ Always save chatRoom
-//     await chatRoom.save();
-//     console.log('✅ Chat room saved:', chatRoom._id);
-
-
-//     return chatRoom;
-//   } catch (err) {
-//     console.error('Error updating chat room:', err);
-//     throw err;
-//   }
-// };
 
 
 
@@ -682,21 +662,31 @@ exports.getAllCourses = async (req, res) => {
 //     res.status(500).json({ error: 'Failed to create course' });
 //   }
 // };
+// Fixed createCourse function with alerts
 exports.createCourse = async (req, res) => {
   try {
     const { title, description, instructorId } = req.body;
+    
+    // Create the course
     const newCourse = await Course.create({ title, description, instructorId });
+    console.log('✅ Course created successfully:', newCourse.title);
     
     // Create chat room for the course
     console.log('Calling updateChatRoom with:', newCourse._id, instructorId);
+    const chatRoom = await updateChatRoom(newCourse._id, instructorId);
+    console.log('✅ Chat room  created successfully for course:', newCourse.title);
     
-    res.status(201).json(newCourse);
+    // Return success response with both confirmations
+    res.status(201).json({
+      success: true,
+      message: 'Course and chat room created successfully',
+      course: newCourse,
+      chatRoomId: chatRoom._id
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: 'Failed to create course' });
   }
-
-  await updateChatRoom(newCourse._id, instructorId);
 };
 
 // In the getMyEnrolledCourses controller
@@ -747,6 +737,32 @@ exports.getTutorCourses = async (req, res) => {
 };
 
 // Enroll student (adds to chat room)
+// exports.enrollStudent = async (req, res) => {
+//   try {
+//     const { courseId } = req.params;
+//     const { studentId } = req.body;
+
+//     const course = await Course.findById(courseId);
+//     if (!course) {
+//       return res.status(404).json({ error: 'Course not found' });
+//     }
+
+//     if (course.studentsEnrolled.includes(studentId)) {
+//       return res.status(400).json({ error: 'Student already enrolled' });
+//     }
+
+//     course.studentsEnrolled.push(studentId);
+
+//     // Update chat room with new student
+//     res.status(200).json({ message: 'Student enrolled successfully', course });
+//   } catch (err) {
+//     res.status(500).json({ error: 'Failed to enroll student', details: err.message });
+//   }
+
+//   await course.save();
+//   await updateChatRoom(courseId, course.instructorId, course.studentsEnrolled);
+//   res.status(200).json({ message: 'Student added to chatroom successfully', course });
+// };
 exports.enrollStudent = async (req, res) => {
   try {
     const { courseId } = req.params;
@@ -762,52 +778,22 @@ exports.enrollStudent = async (req, res) => {
     }
 
     course.studentsEnrolled.push(studentId);
+    await course.save();
 
-    // Update chat room with new student
-    res.status(200).json({ message: 'Student enrolled successfully', course });
+    await updateChatRoom(courseId, course.instructorId, course.studentsEnrolled);
+
+    return res.status(200).json({ 
+      message: 'Student enrolled and added to chatroom successfully', 
+      course 
+    });
+
   } catch (err) {
-    res.status(500).json({ error: 'Failed to enroll student', details: err.message });
+    return res.status(500).json({ error: 'Failed to enroll student', details: err.message });
   }
-
-  await course.save();
-  await updateChatRoom(courseId, course.instructorId, course.studentsEnrolled);
-
 };
 
-// Enroll a student in a course
-// exports.enrollStudent = async (req, res) => {
-//   try {
-//     const { courseId } = req.params;
-//     const { studentId } = req.body;
-
-//     const course = await Course.findById(courseId);
-//     if (!course) {
-//       console.error(`Course not found with ID: ${courseId}`);
-//       return res.status(404).json({ error: 'Course not found' });
-//     }
 
 
-    // const student = await User.findById(studentId);
-    // if (!student || student.role !== 'student') {
-    //   console.error(`Invalid student ID or not a student: ${studentId}`);
-    //   return res.status(400).json({ error: 'Invalid student ID or user is not a student' });
-    // }
-
-//     if (course.studentsEnrolled.includes(studentId)) {
-//       console.warn(`Student ${studentId} is already enrolled in course ${courseId}`);
-//       return res.status(400).json({ error: 'Student already enrolled in this course' });
-//     }
-
-//     course.studentsEnrolled.push(studentId);
-//     await course.save();
-
-//     console.log(`Student ${studentId} successfully enrolled in course ${courseId}`);
-//     res.status(200).json({ message: 'Student enrolled successfully', course });
-//   } catch (err) {
-//     console.error('Error enrolling student in course:', err);
-//     res.status(500).json({ error: 'Failed to enroll student', details: err.message });
-//   }
-// };
 exports.removeStudent = async (req, res) => {
   try {
     const { courseId } = req.params;
