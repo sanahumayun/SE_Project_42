@@ -53,6 +53,7 @@ app.use("/api/submission", require("./routes/submissionRoutes"));
 app.use("/api/progress", authenticate, checkRole('admin', 'tutor', 'student'), require("./routes/progressRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes")); 
+app.use('/api/grades', require("./routes/gradeRoutes"));
 app.use('/api/badges', authenticate, checkRole('student'), require("./routes/badgeRoutes"));
 
 const server = http.createServer(app);

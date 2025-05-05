@@ -7,6 +7,7 @@ import Login from './pages/Auth/Login';
 
 import TutorUploadAssignment from "./pages/Courses/TutorUploadAssignment";
 import StudentCourseView from "./pages/Courses/StudentCourseView";
+import GradeSubmissions from './components/GradeSubmission';
 import TutorCourseView from "./pages/Courses/TutorCourseView";
 
 import StudentProgress from "./components/StudentProgress";
@@ -49,8 +50,9 @@ function App() {
 
         <Route path="/student-progress" element={<StudentProgress />} />
         <Route path="/tutor-progress" element={<TutorViewProgress />} />
+
+        <Route path="/tutor-dashboard/grade" element={<GradeSubmissions />} />
         
-        {/* <Route path="/tutor-dashboard/grade" element={<GradeSubmissions />} /> */}
         {/* <Route path="/student-dashboard/submit-assignment" element={<StudentSubmitAssignment />} /> */}
         
         <Route path="/create-course" element={<CreateCourse />} />
@@ -62,7 +64,7 @@ function App() {
         <Route path="/student-badges" element={<StudentBadgesPage />} />
         <Route path="courses/tutor-course-view" element={<TutorCourseView />} />
         <Route path="courses/tutor-upload-assignment" element={<TutorUploadAssignment />} />
-        {/* Chat Routes */}
+
         <Route path="/chat" element={<ChatProvider><ChatLayout /></ChatProvider>} />
       </Routes>
     </Router>

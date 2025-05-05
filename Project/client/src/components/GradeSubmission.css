@@ -1,0 +1,109 @@
+.gs-wrapper {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: #f8fcff;               
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem 2.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  }
+  
+  .gs-wrapper h2 {
+    margin-bottom: 1.4rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #0e1e40;
+  }
+  
+  .grade-wrapper {
+    max-width: 900px;
+    margin: 1.5rem auto;
+  }
+  
+  .grade-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  
+  .grade-table th,
+  .grade-table td {
+    padding: 0.65rem 0.8rem;
+    border-bottom: 1px solid #e2e8f0;  
+  }
+  
+  .grade-table th {
+    text-align: left;
+    color: #fff;                        
+    background: #1e3a8a;                
+    font-weight: 600;
+  }
+  
+  .grade-table tr.alt {
+    background: #f8fafc;              
+  }
+  
+  .grade-table tbody tr:hover:not(.alt) td {
+    background: #f1f5f9;
+  }
+  
+  .no-submission {
+    text-align: center;
+    padding: 1.25rem;
+    color: #475569;
+  }
+  
+  .grade-table input {
+    width: 100%;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font: inherit;
+  }
+  
+  .grade-table input:focus {
+    outline: none;
+    border-color: #2563eb;              
+  }
+  
+  .grade-btn {
+    background: #2563eb;                
+    color: #fff;
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  
+  .grade-btn:disabled {
+    background: #94a3b8;               
+    cursor: not-allowed;
+  }
+  
+  .grade-btn:hover:not(:disabled) {
+    background: #1e4fd8;               
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+  }
+  
+  .badge.success { background: #16a34a; }  
+  .badge.error   { background: #dc2626; } 
+  
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
