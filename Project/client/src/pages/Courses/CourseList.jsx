@@ -32,7 +32,7 @@ const CourseList = () => {
   const handleEnroll = async (courseId, studentId) => {
     if (!window.confirm("Enroll this student?")) return;
     try {
-      await axios.post(`/api/courses/${courseId}/enroll`, { studentId });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/enroll`, { studentId });
       alert("✅ Student enrolled and added to chatroom!");
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ const CourseList = () => {
     if (!window.confirm("Remove this student?")) return;
 
     try {
-      await axios.post(`/api/courses/${courseId}/remove-student`, { studentId });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/courses/${courseId}/remove-student`, { studentId });
       alert("✅ Student removed from course and chatroom.");
     } catch (err) {
       console.error(err);

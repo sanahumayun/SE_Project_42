@@ -1,20 +1,18 @@
-// controllers/submissionController.js
 
-const Submission = require("../models/Submission");  // The submission model
-const Assignment = require("../models/Assignment");  // The assignment model
-const User = require("../models/User");  // The user model for identifying students
+const Submission = require("../models/Submission");  
+const Assignment = require("../models/Assignment");  
+const User = require("../models/User"); 
 
 exports.submitAssignment = async (req, res) => {
   try {
     const { assignmentId } = req.params;
     const { content } = req.body;
 
-    // Ensure the student is logged in (auth middleware should set req.user)
     if (!req.user) {
       return res.status(401).json({ message: "Unauthorized: Please log in." });
     }
 
-    const studentId = req.user.id; // Get the studentId from authenticated user
+    const studentId = req.user.id; 
 
     if (!content) {
       return res.status(400).json({ message: "Submission content is required." });
@@ -22,7 +20,7 @@ exports.submitAssignment = async (req, res) => {
 
     const submission = new Submission({
       assignmentId,
-      studentId, // Add the studentId here
+      studentId, 
       content,
     });
 
@@ -43,7 +41,6 @@ exports.getSubmissionsForAssignment = async (req, res) => {
     const { assignmentId } = req.params;
     console.log(`Fetching submissions for assignment ID: ${assignmentId}`);
 
-    // Find the assignment and check if it exists
     const assignment = await Assignment.findById(assignmentId);
     console.log(`Fetched assignment: ${assignment ? assignment.title : "Assignment not found"}`);
 
@@ -52,7 +49,6 @@ exports.getSubmissionsForAssignment = async (req, res) => {
       return res.status(404).json({ message: "Assignment not found." });
     }
 
-    // Get all submissions for this assignment
     const submissions = await Submission.find({ assignmentId }).populate("studentId", "name email");
     console.log(`Found ${submissions.length} submissions for assignment ID: ${assignmentId}`);
 

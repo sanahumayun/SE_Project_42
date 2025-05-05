@@ -17,16 +17,16 @@ const StudentCourseView = () => {
     const fetchEnrolledCourses = async () => {
       try {
         const authToken = localStorage.getItem("authToken")
-        console.log("Using auth token:", authToken) // Check the token
+        console.log("Using auth token:", authToken) 
         const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/courses/student-course-view`, {
           headers: { Authorization: `Bearer ${authToken}` },
         })
         setCourses(res.data)
-        setLoading(false) // Set loading to false after data is fetched
+        setLoading(false) 
       } catch (err) {
         console.error("Failed to fetch student courses:", err.response ? err.response.data : err.message)
         setError("Failed to load your courses.")
-        setLoading(false) // Set loading to false in case of an error
+        setLoading(false) 
       }
     }
 
@@ -70,7 +70,7 @@ const StudentCourseView = () => {
         ...prev,
         [courseId]: {
           ...prev[courseId],
-          [assignmentId]: "", // Clear the input after successful submission
+          [assignmentId]: "",
         },
       }))
     } catch (err) {

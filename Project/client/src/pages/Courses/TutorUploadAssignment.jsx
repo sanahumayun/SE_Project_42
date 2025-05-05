@@ -53,7 +53,7 @@ const TutorCourseView = () => {
       )
 
       setSuccessMsg((prev) => ({ ...prev, [courseId]: "Assignment uploaded!" }))
-      setFormData((prev) => ({ ...prev, [courseId]: {} })) // Clear form
+      setFormData((prev) => ({ ...prev, [courseId]: {} })) 
     } catch (err) {
       console.error("Upload failed:", err.response?.data || err.message)
       alert("Failed to upload assignment.")

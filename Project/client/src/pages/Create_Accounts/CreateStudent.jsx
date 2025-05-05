@@ -10,7 +10,7 @@ const CreateStudent = () => {
     username: "",
     email: "",
     password: "",
-    role: "student", // fixed role
+    role: "student", 
   })
 
   const navigate = useNavigate()

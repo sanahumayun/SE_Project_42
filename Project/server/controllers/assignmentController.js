@@ -1,14 +1,11 @@
-// controllers/assignmentController.js
 const Assignment = require('../models/Assignment');
 const Course = require('../models/Course');
 
-// Upload Assignment
 exports.uploadAssignment = async (req, res) => {
-  const { courseId } = req.params;  // Course ID from the URL
-  const { title, description, dueDate } = req.body;  // Data from the request body
+  const { courseId } = req.params;  
+  const { title, description, dueDate } = req.body;  
 
   try {
-    // Create a new assignment
     const newAssignment = new Assignment({
       course: courseId,
       title,
@@ -16,15 +13,12 @@ exports.uploadAssignment = async (req, res) => {
       dueDate,
     });
 
-    // Save the assignment to the database
     await newAssignment.save();
 
-    // Find the course and update it with the new assignment ID
     const course = await Course.findById(courseId);
     course.assignments.push(newAssignment._id);
     await course.save();
 
-    // Send the response back to the client
     res.status(201).json({ message: 'Assignment uploaded successfully!', assignment: newAssignment });
   } catch (err) {
     console.error('Error uploading assignment:', err);
@@ -32,7 +26,6 @@ exports.uploadAssignment = async (req, res) => {
   }
 };
 
-// Get all assignments for a specific course
 exports.getAssignmentsByCourse = async (req, res) => {
   const { courseId } = req.params;
 
@@ -48,7 +41,6 @@ exports.getAssignmentsByCourse = async (req, res) => {
   }
 };
 
-// Get a specific assignment by its ID
 exports.getAssignmentById = async (req, res) => {
   const { assignmentId } = req.params;
 

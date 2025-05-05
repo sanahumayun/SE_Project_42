@@ -13,17 +13,14 @@ const Login = () => {
     e.preventDefault()
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, form)
-      const token = res.data.token // The JWT token from the backend
-      const user = res.data.user // User data from the backend
+      const token = res.data.token 
+      const user = res.data.user 
 
-      // Store the token and user information in localStorage
+      
       localStorage.setItem("authToken", token)
       localStorage.setItem("user", JSON.stringify(user))
 
-      // Alert for debugging
-      // alert(`Token: ${token}\nUser Info: ${JSON.stringify(user, null, 2)}`)
-
-      // Redirect based on user role
+      
       if (user.role === "admin") {
         window.location.href = "/admin-dashboard"
       } else if (user.role === "tutor") {

@@ -11,12 +11,12 @@ const courseSchema = new mongoose.Schema({
   },
   instructorId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // assuming the instructor is a User
+    ref: 'User', 
     required: true
   },
   studentsEnrolled: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // assuming students are also Users
+    ref: 'User' 
   }],
   assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
   status: {

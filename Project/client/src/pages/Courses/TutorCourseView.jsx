@@ -10,7 +10,7 @@ const TutorCourseView = () => {
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({});
   const [successMsg, setSuccessMsg] = useState({});
-  const [submissions, setSubmissions] = useState({}); // New state to store submissions
+  const [submissions, setSubmissions] = useState({}); 
 
   useEffect(() => {
     const fetchTeachingCourses = async () => {
@@ -28,7 +28,6 @@ const TutorCourseView = () => {
     fetchTeachingCourses();
   }, []);
 
-  // Fetch submissions for a specific assignment
   const fetchSubmissionsForAssignment = async (assignmentId) => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/submission/${assignmentId}`);

@@ -1,11 +1,10 @@
-// middleware/auth.js
-const jwt = require('jsonwebtoken');  // Add this line to import the jwt library
+const jwt = require('jsonwebtoken');  
 
 
 const authenticate = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
   
-  console.log("Authorization Header:", req.header('Authorization'));  // Log the header for debugging
+  console.log("Authorization Header:", req.header('Authorization')); 
 
   if (!token) {
     console.error("No token provided");
@@ -14,8 +13,8 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded user info:", decoded);  // Log the decoded token
-    req.user = {  // Create the user object from decoded data
+    console.log("Decoded user info:", decoded);  
+    req.user = {  
       id: decoded.id,
       role: decoded.role
     };
@@ -28,7 +27,7 @@ const authenticate = (req, res, next) => {
 
 const checkRole = (roles) => (req, res, next) => {
   console.log("Inside checkRole middleware");
-  console.log("User object in checkRole:", req.user);  // Log user object in checkRole
+  console.log("User object in checkRole:", req.user);  
 
   if (!roles.includes(req.user.role)) {
     console.error("Access denied. User role:", req.user.role);
